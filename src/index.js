@@ -3,21 +3,22 @@ const documentClient = new AWS.DynamoDB.DocumentClient({region:'eu-west-3'});
 
 
 exports.handler = (event, context, callback) => {
-  const data = JSON.parse(event.Records[0].body);
-
+  const _tokenId = JSON.parse(event.Records[0].body)._tokenId;
+  const eventId = JSON.parse(event.Records[0].body).eventId;
+  console.log(_tokenId);
   Promise.all([
       documentClient.delete({
           TableName: `cryptomon-shop-${process.env.NODE_ENV}`,
           Key: {
-              monsterId: data._tokenId
+              monsterId: _tokenId
           }
       }).promise(),
 
       documentClient.put({
-          TableName: `cryptomon-shop-${process.env.NODE_ENV}`,
+          TableName: `cryptomon-events-${process.env.NODE_ENV}`,
           Item: {
-              transactionId: data.eventId,
-              type: 'bought',
+              transactionId: eventId,
+              type: 'buy',
               processed: true
           }
       }).promise().catch(console.error)
