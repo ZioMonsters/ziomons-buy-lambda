@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "cryptomon-buy-lambda-${env}",
+  "description": "",
+  "author": " <>",
+  "contributors": [
+    {
+      "name": "",
+      "email": ""
+    }
+  ],
+  "dependencies": {}
+}
